@@ -28,34 +28,64 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            textBox1 = new TextBox();
+            btnStart = new Button();
+            tbBodiesCount = new TextBox();
+            tbBodyMass = new TextBox();
+            tbDeltaTime = new TextBox();
+            tbThreadsNum = new TextBox();
             SuspendLayout();
             // 
-            // button1
+            // btnStart
             // 
-            button1.Location = new Point(336, 306);
-            button1.Name = "button1";
-            button1.Size = new Size(132, 54);
-            button1.TabIndex = 0;
-            button1.Text = "Симуляция";
-            button1.UseVisualStyleBackColor = true;
+            btnStart.Location = new Point(13, 121);
+            btnStart.Name = "btnStart";
+            btnStart.Size = new Size(75, 23);
+            btnStart.TabIndex = 4;
+            btnStart.Text = "Старт";
+            btnStart.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tbBodiesCount
             // 
-            textBox1.Location = new Point(353, 237);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(103, 23);
-            textBox1.TabIndex = 1;
-            textBox1.TextChanged += textBox1_TextChanged;
+            tbBodiesCount.Location = new Point(13, 13);
+            tbBodiesCount.Name = "tbBodiesCount";
+            tbBodiesCount.Size = new Size(100, 23);
+            tbBodiesCount.TabIndex = 0;
+            tbBodiesCount.Text = "Количество тел";
+            // 
+            // tbBodyMass
+            // 
+            tbBodyMass.Location = new Point(13, 40);
+            tbBodyMass.Name = "tbBodyMass";
+            tbBodyMass.Size = new Size(100, 23);
+            tbBodyMass.TabIndex = 1;
+            tbBodyMass.Text = "Масса тела";
+            // 
+            // tbDeltaTime
+            // 
+            tbDeltaTime.Location = new Point(13, 67);
+            tbDeltaTime.Name = "tbDeltaTime";
+            tbDeltaTime.Size = new Size(100, 23);
+            tbDeltaTime.TabIndex = 2;
+            tbDeltaTime.Text = "Delta-time";
+            // 
+            // tbThreadsNum
+            // 
+            tbThreadsNum.Location = new Point(13, 94);
+            tbThreadsNum.Name = "tbThreadsNum";
+            tbThreadsNum.Size = new Size(100, 23);
+            tbThreadsNum.TabIndex = 3;
+            tbThreadsNum.Text = "Количество потоков";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(textBox1);
-            Controls.Add(button1);
+            Controls.Add(tbThreadsNum);
+            Controls.Add(tbDeltaTime);
+            Controls.Add(tbBodyMass);
+            Controls.Add(tbBodiesCount);
+            Controls.Add(btnStart);
             Name = "Form1";
             Text = "Гравитационная задача n тел";
             Load += Form1_Load;
@@ -65,7 +95,11 @@
 
         #endregion
 
-        private Button button1;
-        private TextBox textBox1;
+        private Button btnStart;
+        private TextBox tbBodiesCount;
+        private TextBox tbBodyMass;
+        private TextBox tbDeltaTime;
+        private TextBox tbThreadsNum;
+       
     }
 }
