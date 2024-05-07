@@ -44,6 +44,11 @@ public class NBodySolver
         _movingTasks = new Task[settings.ThreadsNum];
     }
 
+    public Body[] GetBodies()
+    {
+        return _bodies;
+    }
+
     public void CalculateBodiesCoords()
     {
         RecalculateBodiesForces();
@@ -138,6 +143,4 @@ public class NBodySolver
             }
         }
     }
-    
-    
 }

@@ -1,16 +1,24 @@
 using NBody;
+using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using Timer = System.Windows.Forms.Timer;
 
 namespace NBodyTask
 {
     public partial class Form1 : Form
     {
 
-        //NBody.Point[] bodiesCoords;
+        static Body[] _bodies;
+        private NBodySolver solver;
+        private Timer timer;
         public Form1()
         {
             InitializeComponent();
             btnStart.Click += button1_Click;
+            timer = new Timer();
+            timer.Interval = 100; // Обновляем каждые 100 мс
+            timer.Tick += Timer_Tick;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -30,61 +38,66 @@ namespace NBodyTask
             int deltaTime = 1;
             int threadsNum = 2;
 
-            NBodySettings settings = new NBodySettings(bodyMass, deltaTime, 1e2, threadsNum);
+            NBodySettings settings = new NBodySettings(bodyMass, deltaTime, 0.01, threadsNum);
 
             BodiesCoordGenerator generator = new BodiesCoordGenerator(bodiesCount);
             NBody.Point[] bodiesCoords = generator.GenerateBodies();
+            solver = new NBodySolver(bodiesCoords, settings);
 
-            NBodySolver solver = new NBodySolver(bodiesCoords, settings);
-
-            for (int i = 0; i < 1000000000; i += deltaTime)
-            {
-                solver.CalculateBodiesCoords();
-            }
-
+            timer.Start();
 
         }
+
+        /*private void DrawBody(Body body)
+        {
+            using (Graphics g = panel1.CreateGraphics())
+            {
+                // Преобразование координат тела в координаты панели
+                int x = (int)(body.Position.x);
+                int y = (int)(body.Position.y);
+
+                // Рисование тела
+                g.FillEllipse(Brushes.Red, x, y, 10, 10);
+            }
+        }*/
 
         /*protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            if (bodiesCoords != null)
+            if (_bodies != null)
             {
-                foreach (NBody.Point point in bodiesCoords)
+                foreach (Body body in _bodies)
                 {
                     // Преобразование координат тела в координаты на форме
-                    double x = point.x * this.Width;
-                    double y = point.y * this.Height;
+                    int x = (int)(body.Position.x * this.Width);
+                    int y = (int)(body.Position.y * this.Height);
 
                     // Рисование точки на форме
-                    e.Graphics.FillEllipse(Brushes.Black, (float)x, (float)y, 2, 2);
+                    e.Graphics.FillEllipse(Brushes.Black, x, y, 50, 50);
                 }
             }
         }*/
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
+            // Вычисляем новые координаты тел
+            solver.CalculateBodiesCoords();
 
+            // Перерисовываем панель
+            panel.Invalidate();
         }
 
-        public void MoveCircle(Body body, int newX, int newY)
+        private void panel_Paint(object sender, PaintEventArgs e)
         {
-            Random random = new Random();
-
-            body.Position.x = newX;
-            body.Position.y = newY;
-            this.Invalidate(); // Это вызовет перерисовку формы и круг переместится
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox_Click(object sender, EventArgs e)
-        {
-
+            if (solver != null)
+            {
+                Body[] bodies = solver.GetBodies();
+                foreach (Body body in bodies)
+                {
+                    
+                    e.Graphics.FillEllipse(Brushes.Red, (float)body.Position.x * panel.Width, (float)body.Position.y * panel.Height, 10, 10);
+                }
+            }
         }
     }
 }
