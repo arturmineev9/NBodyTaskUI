@@ -16,8 +16,8 @@ public class BodiesCoordGenerator : IBodyGenerator
         //this.height = height;
 
         random = new Random();
-        randomMin = -100;
-        randomMax = 100;
+        randomMin = 0;
+        randomMax = 500;
     }
 
     public Point[] GenerateBodies()
