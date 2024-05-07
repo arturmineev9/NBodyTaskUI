@@ -36,7 +36,6 @@ namespace NBodyTask
             tbDeltaTime = new TextBox();
             tbThreadsNum = new TextBox();
             panel = new Panel();
-            button1 = new Button();
             SuspendLayout();
             // 
             // btnStart
@@ -89,24 +88,13 @@ namespace NBodyTask
             panel.Size = new Size(612, 426);
             panel.TabIndex = 0;
             panel.Paint += panel_Paint;
-            
-            // 
-            // button1
-            // 
-            button1.Location = new Point(12, 150);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 5;
-            button1.Text = "Двигать";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+            //panel.Dock = DockStyle.Fill;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(button1);
             Controls.Add(panel);
             Controls.Add(tbThreadsNum);
             Controls.Add(tbDeltaTime);

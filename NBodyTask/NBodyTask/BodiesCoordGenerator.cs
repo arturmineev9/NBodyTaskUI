@@ -17,21 +17,25 @@ public class BodiesCoordGenerator : IBodyGenerator
 
         random = new Random();
         randomMin = 0;
-        randomMax = 500;
+        randomMax = 700;
     }
 
     public Point[] GenerateBodies()
     {
-        Point[] bodiesCoord = new Point[n];
 
-        for (int i = 0; i < bodiesCoord.Length; i++)
+        var points = new HashSet<Point>();
+
+        while (points.Count < n)
         {
-            int x = random.Next(randomMin, randomMax);
-            int y = random.Next(randomMin, randomMax);
-            bodiesCoord[i] = new Point(x, y);
+            int x = random.Next(1, 500); // √енерируем случайное число дл€ x в диапазоне от 1 до 500
+            int y = random.Next(1, 500); // √енерируем случайное число дл€ y в диапазоне от 1 до 500
+
+            var point = new Point(x, y);
+
+            points.Add(point); // ƒобавл€ем точку в HashSet. ≈сли точка уже существует, она не будет добавлена
         }
 
-        return bodiesCoord;
+        return points.ToArray();
     }
 
 }
