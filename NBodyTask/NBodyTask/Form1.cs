@@ -95,7 +95,7 @@ namespace NBodyTask
                 foreach (Body body in bodies)
                 {
                     
-                    e.Graphics.FillEllipse(Brushes.Red, (float)body.Position.x * panel.Width, (float)body.Position.y * panel.Height, 10, 10);
+                    e.Graphics.FillEllipse(Brushes.Red, (float)body.Position.x, (float)body.Position.y, 10, 10);
                 }
             }
         }
