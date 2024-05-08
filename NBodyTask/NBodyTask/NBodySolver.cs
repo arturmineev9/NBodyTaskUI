@@ -96,16 +96,19 @@ public class NBodySolver
                 for (int l = k + 1; l < _bodies.Length; l++)
                 {
                     distance = Physics.GetDistance(_bodies[k], _bodies[l]);
-                    magnitude = distance < _errorDistance ? 0.0 : Physics.GetGravityMagnitude(_bodies[k].Mass, _bodies[l].Mass, distance);
-                    direction = Physics.GetDirection(_bodies[k], _bodies[l]);
-
-                    _bodies[k].Force.x += magnitude * direction.x / distance;
-                    _bodies[k].Force.y += magnitude * direction.y / distance;
-
-                    lock (this)
+                    if (!Double.IsNaN(distance))
                     {
-                        _bodies[l].Force.x -= magnitude * direction.x / distance;
-                        _bodies[l].Force.y -= magnitude * direction.y / distance;
+                        magnitude = distance < _errorDistance ? 0.0 : Physics.GetGravityMagnitude(_bodies[k].Mass, _bodies[l].Mass, distance);
+                        direction = Physics.GetDirection(_bodies[k], _bodies[l]);
+
+                        _bodies[k].Force.x += magnitude * direction.x / distance;
+                        _bodies[k].Force.y += magnitude * direction.y / distance;
+
+                        lock (this)
+                        {
+                            _bodies[l].Force.x -= magnitude * direction.x / distance;
+                            _bodies[l].Force.y -= magnitude * direction.y / distance;
+                        }
                     }
                 }
             }

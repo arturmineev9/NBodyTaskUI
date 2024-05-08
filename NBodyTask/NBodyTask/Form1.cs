@@ -11,9 +11,14 @@ namespace NBodyTask
         public Form1()
         {
             InitializeComponent();
-            this.DoubleBuffered = true;
+            //this.DoubleBuffered = true;
             btnStart.Click += button1_Click;
             this.WindowState = FormWindowState.Maximized;
+
+            this.Padding = new Padding(left: 200, right: 10, top: 20, bottom: 20); // Здесь 10 - это размер отступа в пикселях
+
+            // Заполните всё доступное пространство панелью
+            panel.Dock = DockStyle.Fill;
             //timer = new Timer();
             //timer.Interval = 1000; // Обновляем каждые 100 мс
             //timer.Tick += Timer_Tick;
@@ -31,14 +36,14 @@ namespace NBodyTask
             double deltaTime = int.Parse(tbDeltaTime.Text);
             int threadsNum = int.Parse(tbThreadsNum.Text);*/
 
-            int bodiesCount = 100;
+            int bodiesCount = 1000;
             double bodyMass = 1e10;
             int deltaTime = 20;
-            int threadsNum = 50;
+            int threadsNum = 100;
 
             NBodySettings settings = new NBodySettings(bodyMass, deltaTime, 0.01, threadsNum);
 
-            BodiesCoordGenerator generator = new BodiesCoordGenerator(bodiesCount);
+            BodiesCoordGenerator generator = new BodiesCoordGenerator(bodiesCount, panel.Width, panel.Height);
             NBody.Point[] bodiesCoords = generator.GenerateBodies();
             solver = new NBodySolver(bodiesCoords, settings);
 
@@ -62,7 +67,7 @@ namespace NBodyTask
                         panel.Invalidate();
                     });
                 });
-                await Task.Delay(100);
+                await Task.Delay(200);
             }
         }
 
