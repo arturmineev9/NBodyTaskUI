@@ -40,71 +40,67 @@ namespace NBodyTask
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(15, 161);
-            btnStart.Margin = new Padding(3, 4, 3, 4);
+            btnStart.Location = new Point(13, 121);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(86, 31);
+            btnStart.Size = new Size(75, 23);
             btnStart.TabIndex = 4;
             btnStart.Text = "Старт";
             btnStart.UseVisualStyleBackColor = true;
             // 
             // tbBodiesCount
             // 
-            tbBodiesCount.Location = new Point(15, 17);
-            tbBodiesCount.Margin = new Padding(3, 4, 3, 4);
+            tbBodiesCount.Location = new Point(13, 13);
             tbBodiesCount.Name = "tbBodiesCount";
-            tbBodiesCount.Size = new Size(157, 27);
+            tbBodiesCount.Size = new Size(138, 23);
             tbBodiesCount.TabIndex = 0;
             tbBodiesCount.Text = "Количество тел";
             // 
             // tbBodyMass
             // 
-            tbBodyMass.Location = new Point(15, 53);
-            tbBodyMass.Margin = new Padding(3, 4, 3, 4);
+            tbBodyMass.Location = new Point(13, 40);
             tbBodyMass.Name = "tbBodyMass";
-            tbBodyMass.Size = new Size(157, 27);
+            tbBodyMass.Size = new Size(138, 23);
             tbBodyMass.TabIndex = 1;
             tbBodyMass.Text = "Масса тела";
             // 
             // tbDeltaTime
             // 
-            tbDeltaTime.Location = new Point(15, 89);
-            tbDeltaTime.Margin = new Padding(3, 4, 3, 4);
+            tbDeltaTime.Location = new Point(13, 67);
             tbDeltaTime.Name = "tbDeltaTime";
-            tbDeltaTime.Size = new Size(157, 27);
+            tbDeltaTime.Size = new Size(138, 23);
             tbDeltaTime.TabIndex = 2;
             tbDeltaTime.Text = "Delta-time";
             // 
             // tbThreadsNum
             // 
-            tbThreadsNum.Location = new Point(15, 125);
-            tbThreadsNum.Margin = new Padding(3, 4, 3, 4);
+            tbThreadsNum.Location = new Point(13, 94);
             tbThreadsNum.Name = "tbThreadsNum";
-            tbThreadsNum.Size = new Size(157, 27);
+            tbThreadsNum.Size = new Size(138, 23);
             tbThreadsNum.TabIndex = 3;
             tbThreadsNum.Text = "Количество потоков";
             // 
             // panel
             // 
             panel.BackColor = Color.LightGray;
-            panel.Location = new Point(293, 17);
+            panel.Location = new Point(176, 13);
+            panel.Margin = new Padding(3, 2, 3, 2);
             panel.Name = "panel";
-            panel.Size = new Size(571, 394);
+            panel.Size = new Size(612, 426);
             panel.TabIndex = 0;
             panel.Paint += panel_Paint;
+            //panel.Dock = DockStyle.Fill;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(panel);
             Controls.Add(tbThreadsNum);
             Controls.Add(tbDeltaTime);
             Controls.Add(tbBodyMass);
             Controls.Add(tbBodiesCount);
             Controls.Add(btnStart);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Гравитационная задача n тел";
             Load += Form1_Load;
@@ -120,5 +116,6 @@ namespace NBodyTask
         private TextBox tbDeltaTime;
         private TextBox tbThreadsNum;
         private Panel panel;
+        private Button button1;
     }
 }

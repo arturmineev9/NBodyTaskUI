@@ -16,7 +16,14 @@ public static class Physics
 
     public static double GetGravityMagnitude(double m1, double m2, double r)
     {
+        /*if (Double.IsNaN(G * m1 * m2 / Math.Pow(r, 2)))
+        {
+            MessageBox.Show($"NaN GetGravityMagnitude, {r}"); ;
+        }*/
+
         return G * m1 * m2 / Math.Pow(r, 2);
+
+
     }
 
     public static Point GetDirection(Body curr, Body other)
