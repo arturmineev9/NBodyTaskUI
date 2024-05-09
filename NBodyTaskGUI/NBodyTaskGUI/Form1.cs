@@ -22,7 +22,7 @@ namespace NBodyTaskGUI
         {
             InitializeComponent();
             this.realizationAssembly = realizationAssembly;
-            
+            this.ActiveControl = invisibleControl;
             this.DoubleBuffered = true;
             paramsType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesAcceptableParams");
             btnStart.Click += button1_Click;
@@ -40,7 +40,7 @@ namespace NBodyTaskGUI
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            /*if (!IsCorrectNum(tbBodiesCount.Text, (int)paramsType.GetField("minBodiesNum").GetValue(null), (int)paramsType.GetField("maxBodiesNum").GetValue(null)))
+            if (!IsCorrectNum(tbBodiesCount.Text, (int)paramsType.GetField("minBodiesNum").GetValue(null), (int)paramsType.GetField("maxBodiesNum").GetValue(null)))
             {
                 MessageBox.Show("Ошибка в поле \"Количество тел\".\nВведите значение от 1 до 1000.");
                 return;
@@ -70,12 +70,9 @@ namespace NBodyTaskGUI
                 return;
             }
 
-            int threadsNum = int.Parse(tbThreadsNum.Text);*/
+            int threadsNum = int.Parse(tbThreadsNum.Text);
 
-            int bodiesCount = 1000;
-            double bodyMass = 1e10;
-            int deltaTime = 20;
-            int threadsNum = 100;
+            
 
             Form2 form2 = new Form2(realizationAssembly, bodiesCount, bodyMass, deltaTime, threadsNum);
             form2.Show();

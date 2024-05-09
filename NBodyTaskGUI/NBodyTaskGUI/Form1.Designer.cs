@@ -52,7 +52,7 @@ partial class Form1
         tbBodiesCount.Name = "tbBodiesCount";
         tbBodiesCount.Size = new Size(138, 23);
         tbBodiesCount.TabIndex = 0;
-        tbBodiesCount.Text = "Количество тел";
+        tbBodiesCount.PlaceholderText = "Количество тел";
         // 
         // tbBodyMass
         // 
@@ -60,7 +60,7 @@ partial class Form1
         tbBodyMass.Name = "tbBodyMass";
         tbBodyMass.Size = new Size(138, 23);
         tbBodyMass.TabIndex = 1;
-        tbBodyMass.Text = "Масса тела";
+        tbBodyMass.PlaceholderText = "Масса тел";
         // 
         // tbDeltaTime
         // 
@@ -68,7 +68,7 @@ partial class Form1
         tbDeltaTime.Name = "tbDeltaTime";
         tbDeltaTime.Size = new Size(138, 23);
         tbDeltaTime.TabIndex = 2;
-        tbDeltaTime.Text = "Delta-time";
+        tbDeltaTime.PlaceholderText = "Delta-time";
         // 
         // tbThreadsNum
         // 
@@ -76,13 +76,21 @@ partial class Form1
         tbThreadsNum.Name = "tbThreadsNum";
         tbThreadsNum.Size = new Size(138, 23);
         tbThreadsNum.TabIndex = 3;
-        tbThreadsNum.Text = "Количество потоков";
+        tbThreadsNum.PlaceholderText = "Количество потоков";
+
+
+        invisibleControl = new Control();
+        invisibleControl.Size = new Size(0, 0);
+        invisibleControl.Location = new Point(-10, -10);
+        
+        
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
+        Controls.Add(invisibleControl);
         Controls.Add(tbThreadsNum);
         Controls.Add(tbDeltaTime);
         Controls.Add(tbBodyMass);
@@ -103,4 +111,5 @@ partial class Form1
     private TextBox tbDeltaTime;
     private TextBox tbThreadsNum;
     private Button button1;
+    Control invisibleControl;
 }
