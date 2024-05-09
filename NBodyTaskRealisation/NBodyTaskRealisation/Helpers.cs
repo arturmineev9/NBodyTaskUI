@@ -1,4 +1,4 @@
-namespace NBody;
+namespace NBodyTaskRealisation;
 
 public static class Helpers
 {
@@ -7,10 +7,10 @@ public static class Helpers
 
         // Вычисление размера каждого диапазона
         int rangeSize = (endNum - startNum + 1) / rangesNum;
-        
+
         // Массив для хранения диапазонов
         int[][] ranges = new int[rangesNum][];
-        
+
         // Заполнение массива диапазонов
         int currentStart = startNum;
         for (int i = 0; i < rangesNum; i++)

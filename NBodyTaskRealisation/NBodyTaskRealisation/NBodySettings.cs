@@ -1,4 +1,4 @@
-namespace NBody;
+namespace NBodyTaskRealisation;
 
 public class NBodySettings
 {
@@ -14,5 +14,5 @@ public class NBodySettings
         ErrorDistance = errorDistance;
         ThreadsNum = threadsNum;
     }
-    
+
 }

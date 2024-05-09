@@ -1,4 +1,4 @@
-namespace NBody;
+namespace NBodyTaskRealisation;
 
 public class BodiesCoordGenerator : IBodyGenerator
 {
@@ -16,17 +16,17 @@ public class BodiesCoordGenerator : IBodyGenerator
         random = new Random();
     }
 
-    public Point[] GenerateBodies()
+    public MyPoint[] GenerateBodies()
     {
 
-        var points = new HashSet<Point>();
+        var points = new HashSet<MyPoint>();
 
         while (points.Count < n)
         {
             int x = random.Next(1, width); // √енерируем случайное число дл€ x в диапазоне от 1 до 500
             int y = random.Next(1, height); // √енерируем случайное число дл€ y в диапазоне от 1 до 500
 
-            var point = new Point(x, y);
+            var point = new MyPoint(x, y);
 
             points.Add(point); // ƒобавл€ем точку в HashSet. ≈сли точка уже существует, она не будет добавлена
         }
@@ -38,5 +38,5 @@ public class BodiesCoordGenerator : IBodyGenerator
 
 public interface IBodyGenerator
 {
-    Point[] GenerateBodies();
+    MyPoint[] GenerateBodies();
 }

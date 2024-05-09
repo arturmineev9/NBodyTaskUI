@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NBodyTaskContract" Version="1.0.5" />
+  </ItemGroup>
+
 </Project>

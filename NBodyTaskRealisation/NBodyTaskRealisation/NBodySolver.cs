@@ -1,9 +1,12 @@
-namespace NBody;
+using NBody;
 
-using System;
+namespace NBodyTaskRealisation;
+
+using NBodyTaskContract;
+
 using System.Threading.Tasks;
 
-public class NBodySolver
+public class NBodySolver : INBodySolver
 {
     private static Body[]? _bodies;
     private static int _dt;
@@ -16,7 +19,7 @@ public class NBodySolver
     private readonly Task[] _movingTasks;
     private readonly TaskFactory _taskFactory;
 
-    public NBodySolver(Point[] bodiesCoords, NBodySettings settings)
+    public NBodySolver(MyPoint[] bodiesCoords, NBodySettings settings)
     {
         _bodies = new Body[bodiesCoords.Length];
         for (int i = 0; i < _bodies.Length; i++)
@@ -29,10 +32,10 @@ public class NBodySolver
 
         int[][] recalcingRanges = Helpers.GetRanges(0, _bodies.Length - 2, settings.ThreadsNum);
         int[][] movingRanges = Helpers.GetRanges(1, _bodies.Length, settings.ThreadsNum);
-        
+
         _recalcingCallables = new ForceCalculator[recalcingRanges.Length];
         _movingCallables = new BodyMover[movingRanges.Length];
-        
+
         for (int i = 0; i < recalcingRanges.Length; i++)
         {
             _recalcingCallables[i] = new ForceCalculator(recalcingRanges[i][0], recalcingRanges[i][1]);
@@ -44,7 +47,7 @@ public class NBodySolver
         _movingTasks = new Task[settings.ThreadsNum];
     }
 
-    public Body[] GetBodies()
+    public IBody[] GetBodies()
     {
         return _bodies;
     }
@@ -55,7 +58,7 @@ public class NBodySolver
         MoveNBodies();
     }
 
-    private void RecalculateBodiesForces()
+    public void RecalculateBodiesForces()
     {
         for (int i = 0; i < _recalcingCallables.Length; i++)
         {
@@ -65,7 +68,7 @@ public class NBodySolver
         Task.WaitAll(_forceCalculatingTasks);
     }
 
-    private void MoveNBodies()
+    public void MoveNBodies()
     {
         for (int i = 0; i < _movingCallables.Length; i++)
         {
@@ -77,37 +80,37 @@ public class NBodySolver
 
     private class ForceCalculator
     {
-        private readonly int leftIndex;
-        private readonly int rightIndex;
+        public int LeftIndex { get; set; }
+        public int RightIndex { get; set; }
 
         public ForceCalculator(int leftIndex, int rightIndex)
         {
-            this.leftIndex = leftIndex;
-            this.rightIndex = rightIndex;
+            this.LeftIndex = leftIndex;
+            this.RightIndex = rightIndex;
         }
 
         public void Call()
         {
             double distance;
             double magnitude;
-            Point direction;
-            for (int k = leftIndex; k <= rightIndex; k++)
+            MyPoint direction;
+            for (int k = LeftIndex; k <= RightIndex; k++)
             {
                 for (int l = k + 1; l < _bodies.Length; l++)
                 {
                     distance = Physics.GetDistance(_bodies[k], _bodies[l]);
-                    if (!Double.IsNaN(distance))
+                    if (!double.IsNaN(distance))
                     {
                         magnitude = distance < _errorDistance ? 0.0 : Physics.GetGravityMagnitude(_bodies[k].Mass, _bodies[l].Mass, distance);
-                        direction = Physics.GetDirection(_bodies[k], _bodies[l]);
+                        direction = (MyPoint)Physics.GetDirection(_bodies[k], _bodies[l]);
 
-                        _bodies[k].Force.x += magnitude * direction.x / distance;
-                        _bodies[k].Force.y += magnitude * direction.y / distance;
+                        _bodies[k].Force.X += magnitude * direction.X / distance;
+                        _bodies[k].Force.Y += magnitude * direction.Y / distance;
 
                         lock (this)
                         {
-                            _bodies[l].Force.x -= magnitude * direction.x / distance;
-                            _bodies[l].Force.y -= magnitude * direction.y / distance;
+                            _bodies[l].Force.X -= magnitude * direction.X / distance;
+                            _bodies[l].Force.Y -= magnitude * direction.Y / distance;
                         }
                     }
                 }
@@ -122,27 +125,27 @@ public class NBodySolver
 
         public BodyMover(int rangeStart, int rangeEnd)
         {
-            this.leftIndex = rangeStart - 1;
-            this.rightIndex = rangeEnd - 1;
+            leftIndex = rangeStart - 1;
+            rightIndex = rangeEnd - 1;
         }
 
         public void Call()
         {
-            Point deltaV; // dv = F / m * dt
-            Point deltaP; // dp = (v + dv / 2) * dt
+            MyPoint deltaV; // dv = F / m * dt
+            MyPoint deltaP; // dp = (v + dv / 2) * dt
 
             for (int i = leftIndex; i <= rightIndex; i++)
             {
                 Body current = _bodies[i];
-                deltaV = Physics.GetDv(current, _dt);
-                deltaP = Physics.GetDp(current, _dt, deltaV);
+                deltaV = (MyPoint)Physics.GetDv(current, _dt);
+                deltaP = (MyPoint)Physics.GetDp(current, _dt, (IMyPoint)deltaV);
 
-                current.Velocity.x += deltaV.x;
-                current.Velocity.y += deltaV.y;
+                current.Velocity.X += deltaV.X;
+                current.Velocity.Y += deltaV.Y;
 
-                current.Position.x += deltaP.x;
-                current.Position.y += deltaP.y;
-                current.Force.x = current.Force.y = 0.0;
+                current.Position.X += deltaP.X;
+                current.Position.Y += deltaP.Y;
+                current.Force.X = current.Force.Y = 0.0;
             }
         }
     }
