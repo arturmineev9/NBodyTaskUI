@@ -35,12 +35,11 @@ partial class Form1
         tbBodyMass = new TextBox();
         tbDeltaTime = new TextBox();
         tbThreadsNum = new TextBox();
-        panel = new Panel();
         SuspendLayout();
         // 
         // btnStart
         // 
-        btnStart.Location = new Point(13, 121);
+        btnStart.Location = new Point(348, 264);
         btnStart.Name = "btnStart";
         btnStart.Size = new Size(75, 23);
         btnStart.TabIndex = 4;
@@ -49,7 +48,7 @@ partial class Form1
         // 
         // tbBodiesCount
         // 
-        tbBodiesCount.Location = new Point(13, 13);
+        tbBodiesCount.Location = new Point(322, 148);
         tbBodiesCount.Name = "tbBodiesCount";
         tbBodiesCount.Size = new Size(138, 23);
         tbBodiesCount.TabIndex = 0;
@@ -57,7 +56,7 @@ partial class Form1
         // 
         // tbBodyMass
         // 
-        tbBodyMass.Location = new Point(13, 40);
+        tbBodyMass.Location = new Point(322, 177);
         tbBodyMass.Name = "tbBodyMass";
         tbBodyMass.Size = new Size(138, 23);
         tbBodyMass.TabIndex = 1;
@@ -65,7 +64,7 @@ partial class Form1
         // 
         // tbDeltaTime
         // 
-        tbDeltaTime.Location = new Point(13, 67);
+        tbDeltaTime.Location = new Point(322, 206);
         tbDeltaTime.Name = "tbDeltaTime";
         tbDeltaTime.Size = new Size(138, 23);
         tbDeltaTime.TabIndex = 2;
@@ -73,29 +72,17 @@ partial class Form1
         // 
         // tbThreadsNum
         // 
-        tbThreadsNum.Location = new Point(13, 94);
+        tbThreadsNum.Location = new Point(322, 235);
         tbThreadsNum.Name = "tbThreadsNum";
         tbThreadsNum.Size = new Size(138, 23);
         tbThreadsNum.TabIndex = 3;
         tbThreadsNum.Text = "Количество потоков";
-        // 
-        // panel
-        // 
-        panel.BackColor = Color.LightGray;
-        panel.Location = new Point(176, 13);
-        panel.Margin = new Padding(3, 2, 3, 2);
-        panel.Name = "panel";
-        panel.Size = new Size(612, 426);
-        panel.TabIndex = 0;
-        panel.Paint += panel_Paint;
-        //panel.Dock = DockStyle.Fill;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
-        Controls.Add(panel);
         Controls.Add(tbThreadsNum);
         Controls.Add(tbDeltaTime);
         Controls.Add(tbBodyMass);
@@ -115,6 +102,5 @@ partial class Form1
     private TextBox tbBodyMass;
     private TextBox tbDeltaTime;
     private TextBox tbThreadsNum;
-    private Panel panel;
     private Button button1;
 }

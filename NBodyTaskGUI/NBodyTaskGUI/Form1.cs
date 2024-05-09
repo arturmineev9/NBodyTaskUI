@@ -22,15 +22,12 @@ namespace NBodyTaskGUI
         {
             InitializeComponent();
             this.realizationAssembly = realizationAssembly;
-            InitializeDllComponent();
-            this.DoubleBuffered = true;
-            btnStart.Click += button1_Click;
-            this.WindowState = FormWindowState.Maximized;
-
-            this.Padding = new Padding(left: 200, right: 10, top: 20, bottom: 20); 
-
             
-            panel.Dock = DockStyle.Fill;
+            this.DoubleBuffered = true;
+            paramsType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesAcceptableParams");
+            btnStart.Click += button1_Click;
+            
+            
             //timer = new Timer();
             //timer.Interval = 1000; 
             //timer.Tick += Timer_Tick;
@@ -43,7 +40,7 @@ namespace NBodyTaskGUI
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            if (!IsCorrectNum(tbBodiesCount.Text, (int)paramsType.GetField("minBodiesNum").GetValue(null), (int)paramsType.GetField("maxBodiesNum").GetValue(null)))
+            /*if (!IsCorrectNum(tbBodiesCount.Text, (int)paramsType.GetField("minBodiesNum").GetValue(null), (int)paramsType.GetField("maxBodiesNum").GetValue(null)))
             {
                 MessageBox.Show("Ошибка в поле \"Количество тел\".\nВведите значение от 1 до 1000.");
                 return;
@@ -73,74 +70,17 @@ namespace NBodyTaskGUI
                 return;
             }
 
-            int threadsNum = int.Parse(tbThreadsNum.Text);
+            int threadsNum = int.Parse(tbThreadsNum.Text);*/
 
+            int bodiesCount = 1000;
+            double bodyMass = 1e10;
+            int deltaTime = 20;
+            int threadsNum = 100;
 
-            //int bodiesCount = 1000;
-            //double bodyMass = 1e10;
-            //int deltaTime = 20;
-            //threadsNum = 100;
-            //NBodySettings settings = new NBodySettings(bodyMass, deltaTime, 0.01, threadsNum);
-
-            settingsInstance = Activator.CreateInstance(settingsType, new object[] { bodyMass, deltaTime, 0.01, threadsNum });
-
-            //BodiesCoordGenerator generator = new BodiesCoordGenerator(bodiesCount, panel.Width, panel.Height);
-            generatorInstance = Activator.CreateInstance(generatorType, new object[] { bodiesCount, panel.Width, panel.Height });
-            MethodInfo generateBodiesMethod = generatorType.GetMethod("GenerateBodies");
-            
-            object bodiesCoords = generateBodiesMethod.Invoke(generatorInstance, null);
-            //solver = new NBodySolver(bodiesCoords, settings);
-            solver = Activator.CreateInstance(solverType, new object[] { bodiesCoords, settingsInstance });
-
-            Stopwatch stopwatch = new Stopwatch();
-            for (int i = 0; i < 1000000000; i += (int)settingsType.GetField("DeltaTime").GetValue(settingsInstance))
-            {
-                //solver.CalculateBodiesCoords();
-                MethodInfo methodInfo = solverType.GetMethod("CalculateBodiesCoords");
-                methodInfo.Invoke(solver, null);
-                //MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
-                stopwatch.Reset();
-                //Body[] b = solver.GetBodies();
-                //MessageBox.Show($"{b[0].Position.x}, {b[0].Position.y}");
-
-                
-                await Task.Run(() =>
-                {
-                    panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
-                    {
-                        panel.Invalidate();
-                    });
-                });
-                await Task.Delay(500);
-            }
+            Form2 form2 = new Form2(realizationAssembly, bodiesCount, bodyMass, deltaTime, threadsNum);
+            form2.Show();
+            this.Hide();
         }
-
-
-        private void panel_Paint(object sender, PaintEventArgs e)
-        {
-            if (solver != null)
-            {
-                MethodInfo methodInfo1 = solverType.GetMethod("GetBodies");
-                object bodies = methodInfo1.Invoke(solver, null);
-
-                foreach (var body in (IEnumerable)bodies)
-                {
-                    Type bodyType = body.GetType();
-                    PropertyInfo positionProperty = bodyType.GetProperty("Position");
-                    object position = positionProperty.GetValue(body, null);
-
-                    Type positionType = position.GetType();
-                    PropertyInfo xProperty = positionType.GetProperty("X");
-                    PropertyInfo yProperty = positionType.GetProperty("Y");
-
-                    float x = (float)(double)xProperty.GetValue(position, null);
-                    float y = (float)(double)yProperty.GetValue(position, null);
-
-                    e.Graphics.FillEllipse(Brushes.Red, x, y, 10, 10);
-                }
-            }
-        }
-
 
 
         public bool IsCorrectNum(string strNum, double minNum, double maxNum)
@@ -156,38 +96,13 @@ namespace NBodyTaskGUI
             return false;
         }
 
-        private void InitializeDllComponent()
+        /*private void InitializeDllComponent()
         {
-            
-         
             //Assembly.LoadFile(@"D:\CSProjects\8QueensContract\8QueensContracts\obj\Debug\net8.0\8QueensContracts.dll");
             solverType = realizationAssembly.GetType("NBodyTaskRealisation.NBodySolver");
             settingsType = realizationAssembly.GetType("NBodyTaskRealisation.NBodySettings");
             generatorType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesCoordGenerator");
-            paramsType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesAcceptableParams");
-        }
-
-        private bool CheckComplianceContract()
-        {
-            var interfaces = new Type[6];
-            interfaces[0] = typeof(IBody); interfaces[1] = typeof(IBodyMover);
-            interfaces[2] = typeof(IForceCalculator); interfaces[3] = typeof(IMyPoint);
-            interfaces[4] = typeof(INBodySolver); interfaces[5] = typeof(IPhysics);
             
-            var types = realizationAssembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && !t.IsSealed);
-
-            foreach (var interfaceType in interfaces)
-            {
-                bool isImplemented = types.Any(t => interfaceType.IsAssignableFrom(t));
-
-                if (!isImplemented)
-                {
-                    MessageBox.Show("????????? ???????????? ??????.", $"???????? {interfaceType.Name} ?? ??????????.");
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        }*/
     }
 }
