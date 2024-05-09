@@ -1,9 +1,7 @@
-using NBodyTaskContract;
+п»їusing NBodyTaskContract;
+using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
-using System.Windows.Forms;
-using System.Collections;
 
 namespace NBodyTaskGUI
 {
@@ -20,20 +18,21 @@ namespace NBodyTaskGUI
         Type settingsType;
         Type generatorType;
         Type paramsType;
-        public Form1()
+        public Form1(Assembly realizationAssembly)
         {
             InitializeComponent();
+            this.realizationAssembly = realizationAssembly;
             InitializeDllComponent();
-            //this.DoubleBuffered = true;
+            this.DoubleBuffered = true;
             btnStart.Click += button1_Click;
             this.WindowState = FormWindowState.Maximized;
 
-            this.Padding = new Padding(left: 200, right: 10, top: 20, bottom: 20); // Здесь 10 - это размер отступа в пикселях
+            this.Padding = new Padding(left: 200, right: 10, top: 20, bottom: 20); 
 
-            // Заполните всё доступное пространство панелью
+            
             panel.Dock = DockStyle.Fill;
             //timer = new Timer();
-            //timer.Interval = 1000; // Обновляем каждые 100 мс
+            //timer.Interval = 1000; 
             //timer.Tick += Timer_Tick;
         }
 
@@ -46,7 +45,7 @@ namespace NBodyTaskGUI
         {
             if (!IsCorrectNum(tbBodiesCount.Text, (int)paramsType.GetField("minBodiesNum").GetValue(null), (int)paramsType.GetField("maxBodiesNum").GetValue(null)))
             {
-                MessageBox.Show("Введите правильное количество тел");
+                MessageBox.Show("РћС€РёР±РєР° РІ РїРѕР»Рµ \"РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РµР»\".\nР’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РѕС‚ 1 РґРѕ 1000.");
                 return;
             }
 
@@ -54,7 +53,7 @@ namespace NBodyTaskGUI
 
             if (!IsCorrectNum(tbBodyMass.Text, (double)paramsType.GetField("minBodyMass").GetValue(null), (double)paramsType.GetField("maxBodyMass").GetValue(null)))
             {
-                MessageBox.Show("Введите правильную массу тела");
+                MessageBox.Show("РћС€РёР±РєР° РІ РїРѕР»Рµ \"РњР°СЃСЃР° С‚РµР»\".\nР’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РѕС‚ 1e3 РґРѕ 9e14.");
                 return;
             }
 
@@ -62,7 +61,7 @@ namespace NBodyTaskGUI
 
             if (!IsCorrectNum(tbDeltaTime.Text, (int)paramsType.GetField("minDeltaTime").GetValue(null), (int)paramsType.GetField("maxDeltaTime").GetValue(null)))
             {
-                MessageBox.Show("Введите правильное значение дельта-времени");
+                MessageBox.Show("РћС€РёР±РєР° РІ РїРѕР»Рµ \"Р”РµР»СЊС‚Р°-T\".\nР’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РѕС‚ 16 РґРѕ 1000.");
                 return;
             }
 
@@ -70,7 +69,7 @@ namespace NBodyTaskGUI
 
             if (!IsCorrectNum(tbThreadsNum.Text, (int)paramsType.GetField("minThreadsNum").GetValue(null), (int)paramsType.GetField("maxThreadsNum").GetValue(null)))
             {
-                MessageBox.Show("Введите правильное количество потоков");
+                MessageBox.Show("РћС€РёР±РєР° РІ РїРѕР»Рµ \"РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕС‚РѕРєРѕРІ\".\nР’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РѕС‚ 1 РґРѕ 128.");
                 return;
             }
 
@@ -88,13 +87,13 @@ namespace NBodyTaskGUI
             //BodiesCoordGenerator generator = new BodiesCoordGenerator(bodiesCount, panel.Width, panel.Height);
             generatorInstance = Activator.CreateInstance(generatorType, new object[] { bodiesCount, panel.Width, panel.Height });
             MethodInfo generateBodiesMethod = generatorType.GetMethod("GenerateBodies");
-            // Вызываем метод
+            
             object bodiesCoords = generateBodiesMethod.Invoke(generatorInstance, null);
             //solver = new NBodySolver(bodiesCoords, settings);
             solver = Activator.CreateInstance(solverType, new object[] { bodiesCoords, settingsInstance });
 
             Stopwatch stopwatch = new Stopwatch();
-            for (int i = 0; i < 1000000000; i += (int) settingsType.GetField("DeltaTime").GetValue(settingsInstance))
+            for (int i = 0; i < 1000000000; i += (int)settingsType.GetField("DeltaTime").GetValue(settingsInstance))
             {
                 //solver.CalculateBodiesCoords();
                 MethodInfo methodInfo = solverType.GetMethod("CalculateBodiesCoords");
@@ -104,7 +103,7 @@ namespace NBodyTaskGUI
                 //Body[] b = solver.GetBodies();
                 //MessageBox.Show($"{b[0].Position.x}, {b[0].Position.y}");
 
-                // Вызываем метод для обновления отрисовки из другого потока
+                
                 await Task.Run(() =>
                 {
                     panel.Invoke((System.Windows.Forms.MethodInvoker)delegate
@@ -159,14 +158,36 @@ namespace NBodyTaskGUI
 
         private void InitializeDllComponent()
         {
-            // Загрузка DLL
-            realizationAssembly = Assembly.LoadFile(@"C:\Users\serge\source\repos\NBodyTaskUI\NBodyTaskRealisation\NBodyTaskRealisation\obj\Debug\net8.0\NBodyTaskRealisation.dll");
+            
+         
             //Assembly.LoadFile(@"D:\CSProjects\8QueensContract\8QueensContracts\obj\Debug\net8.0\8QueensContracts.dll");
-            // Получение типа
             solverType = realizationAssembly.GetType("NBodyTaskRealisation.NBodySolver");
             settingsType = realizationAssembly.GetType("NBodyTaskRealisation.NBodySettings");
             generatorType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesCoordGenerator");
             paramsType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesAcceptableParams");
+        }
+
+        private bool CheckComplianceContract()
+        {
+            var interfaces = new Type[6];
+            interfaces[0] = typeof(IBody); interfaces[1] = typeof(IBodyMover);
+            interfaces[2] = typeof(IForceCalculator); interfaces[3] = typeof(IMyPoint);
+            interfaces[4] = typeof(INBodySolver); interfaces[5] = typeof(IPhysics);
+            
+            var types = realizationAssembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && !t.IsSealed);
+
+            foreach (var interfaceType in interfaces)
+            {
+                bool isImplemented = types.Any(t => interfaceType.IsAssignableFrom(t));
+
+                if (!isImplemented)
+                {
+                    MessageBox.Show("????????? ???????????? ??????.", $"???????? {interfaceType.Name} ?? ??????????.");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

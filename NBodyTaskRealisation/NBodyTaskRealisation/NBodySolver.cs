@@ -78,7 +78,7 @@ public class NBodySolver : INBodySolver
         Task.WaitAll(_movingTasks);
     }
 
-    private class ForceCalculator
+    private class ForceCalculator : IForceCalculator
     {
         public int LeftIndex { get; set; }
         public int RightIndex { get; set; }
@@ -118,15 +118,15 @@ public class NBodySolver : INBodySolver
         }
     }
 
-    private class BodyMover
+    private class BodyMover : IBodyMover
     {
-        private readonly int leftIndex;
-        private readonly int rightIndex;
+        public int LeftIndex { get; set; }
+        public int RightIndex { get; set; }
 
         public BodyMover(int rangeStart, int rangeEnd)
         {
-            leftIndex = rangeStart - 1;
-            rightIndex = rangeEnd - 1;
+            LeftIndex = rangeStart - 1;
+            RightIndex = rangeEnd - 1;
         }
 
         public void Call()
@@ -134,7 +134,7 @@ public class NBodySolver : INBodySolver
             MyPoint deltaV; // dv = F / m * dt
             MyPoint deltaP; // dp = (v + dv / 2) * dt
 
-            for (int i = leftIndex; i <= rightIndex; i++)
+            for (int i = LeftIndex; i <= RightIndex; i++)
             {
                 Body current = _bodies[i];
                 deltaV = (MyPoint)Physics.GetDv(current, _dt);
