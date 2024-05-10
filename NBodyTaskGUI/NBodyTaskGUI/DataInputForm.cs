@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace NBodyTaskGUI
 {
-    public partial class Form1 : Form
+    public partial class DataInputForm : Form
     {
         //static object _bodies;
         private object solver;
@@ -18,7 +18,7 @@ namespace NBodyTaskGUI
         Type settingsType;
         Type generatorType;
         Type paramsType;
-        public Form1(Assembly realizationAssembly)
+        public DataInputForm(Assembly realizationAssembly)
         {
             InitializeComponent();
             this.realizationAssembly = realizationAssembly;
@@ -69,12 +69,17 @@ namespace NBodyTaskGUI
                 MessageBox.Show("Ошибка в поле \"Количество потоков\".\nВведите значение от 1 до 128.");
                 return;
             }
+            if (int.Parse(tbThreadsNum.Text) > bodiesCount)
+            {
+                MessageBox.Show("Ошибка!\nКоличество потоков не может быть больше количества тел.");
+                return;
+            }
 
             int threadsNum = int.Parse(tbThreadsNum.Text);
 
             
 
-            Form2 form2 = new Form2(realizationAssembly, bodiesCount, bodyMass, deltaTime, threadsNum);
+            ModelingForm form2 = new ModelingForm(realizationAssembly, bodiesCount, bodyMass, deltaTime, threadsNum);
             form2.Show();
             this.Hide();
         }

@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace NBodyTaskGUI
 {
-    public partial class Form0 : Form
+    public partial class DllCheckForm : Form
     {
-        public Form0()
+        public DllCheckForm()
         {
             InitializeComponent();
         }
@@ -65,7 +65,7 @@ namespace NBodyTaskGUI
                 if (isCompliant)
                 {
                     // Если сборка соответствует контракту, переходим к следующей форме
-                    Form1 form1 = new Form1(realizationAssembly);
+                    DataInputForm form1 = new DataInputForm(realizationAssembly);
                     form1.Show();
                     this.Hide();
                 }

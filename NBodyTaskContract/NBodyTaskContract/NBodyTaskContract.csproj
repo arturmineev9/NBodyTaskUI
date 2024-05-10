@@ -8,7 +8,7 @@
     <Title>NBodyTaskContract</Title>
     <Description>Contract for N-Body task</Description>
     <Authors>ArthurMineev</Authors>
-    <Version>1.0.5</Version>
+    <Version>1.0.8</Version>
   </PropertyGroup>
 
 </Project>

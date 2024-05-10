@@ -2,7 +2,7 @@
 
 namespace NBodyTaskGUI;
 
-partial class Form1
+partial class DataInputForm
 {
     /// <summary>
     ///  Required designer variable.
@@ -35,68 +35,76 @@ partial class Form1
         tbBodyMass = new TextBox();
         tbDeltaTime = new TextBox();
         tbThreadsNum = new TextBox();
+        invisibleControl = new Control();
         SuspendLayout();
         // 
         // btnStart
         // 
-        btnStart.Location = new Point(348, 264);
+        btnStart.Location = new Point(395, 349);
+        btnStart.Margin = new Padding(3, 4, 3, 4);
         btnStart.Name = "btnStart";
-        btnStart.Size = new Size(75, 23);
+        btnStart.Size = new Size(86, 31);
         btnStart.TabIndex = 4;
         btnStart.Text = "Старт";
         btnStart.UseVisualStyleBackColor = true;
         // 
         // tbBodiesCount
         // 
-        tbBodiesCount.Location = new Point(322, 148);
+        tbBodiesCount.Location = new Point(331, 198);
+        tbBodiesCount.Margin = new Padding(3, 4, 3, 4);
         tbBodiesCount.Name = "tbBodiesCount";
-        tbBodiesCount.Size = new Size(138, 23);
-        tbBodiesCount.TabIndex = 0;
         tbBodiesCount.PlaceholderText = "Количество тел";
+        tbBodiesCount.Size = new Size(222, 27);
+        tbBodiesCount.TabIndex = 0;
         // 
         // tbBodyMass
         // 
-        tbBodyMass.Location = new Point(322, 177);
+        tbBodyMass.Location = new Point(331, 233);
+        tbBodyMass.Margin = new Padding(3, 4, 3, 4);
         tbBodyMass.Name = "tbBodyMass";
-        tbBodyMass.Size = new Size(138, 23);
-        tbBodyMass.TabIndex = 1;
         tbBodyMass.PlaceholderText = "Масса тел";
+        tbBodyMass.Size = new Size(222, 27);
+        tbBodyMass.TabIndex = 1;
         // 
         // tbDeltaTime
         // 
-        tbDeltaTime.Location = new Point(322, 206);
+        tbDeltaTime.Location = new Point(331, 276);
+        tbDeltaTime.Margin = new Padding(3, 4, 3, 4);
         tbDeltaTime.Name = "tbDeltaTime";
-        tbDeltaTime.Size = new Size(138, 23);
+        tbDeltaTime.PlaceholderText = "Временной шаг (Delta-time)";
+        tbDeltaTime.Size = new Size(222, 27);
         tbDeltaTime.TabIndex = 2;
-        tbDeltaTime.PlaceholderText = "Delta-time";
         // 
         // tbThreadsNum
         // 
-        tbThreadsNum.Location = new Point(322, 235);
+        tbThreadsNum.Location = new Point(331, 314);
+        tbThreadsNum.Margin = new Padding(3, 4, 3, 4);
         tbThreadsNum.Name = "tbThreadsNum";
-        tbThreadsNum.Size = new Size(138, 23);
-        tbThreadsNum.TabIndex = 3;
         tbThreadsNum.PlaceholderText = "Количество потоков";
-
-
-        invisibleControl = new Control();
+        tbThreadsNum.Size = new Size(222, 27);
+        tbThreadsNum.TabIndex = 3;
+        // 
+        // invisibleControl
+        // 
+        invisibleControl.Location = new Point(-11, -13);
+        invisibleControl.Margin = new Padding(3, 4, 3, 4);
+        invisibleControl.Name = "invisibleControl";
         invisibleControl.Size = new Size(0, 0);
-        invisibleControl.Location = new Point(-10, -10);
-        
-        
+        invisibleControl.TabIndex = 0;
         // 
-        // Form1
+        // DataInputForm
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(914, 600);
         Controls.Add(invisibleControl);
         Controls.Add(tbThreadsNum);
         Controls.Add(tbDeltaTime);
         Controls.Add(tbBodyMass);
         Controls.Add(tbBodiesCount);
         Controls.Add(btnStart);
-        Name = "Form1";
+        Margin = new Padding(3, 4, 3, 4);
+        Name = "DataInputForm";
         Text = "Гравитационная задача n тел";
         Load += Form1_Load;
         ResumeLayout(false);

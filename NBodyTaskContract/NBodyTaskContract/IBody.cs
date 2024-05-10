@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NBodyTaskContract
 {
+    /// <summary>
+    /// Интерфейс для представления тела в системе N-тел.
+    /// </summary>
     public interface IBody
     {
         public IMyPoint Position { get; set; }

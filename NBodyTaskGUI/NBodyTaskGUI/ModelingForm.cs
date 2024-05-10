@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace NBodyTaskGUI
 {
-    public partial class Form2 : Form
+    public partial class ModelingForm : Form
     {
         private object solverInstance;
         private object settingsInstance;
@@ -30,7 +30,7 @@ namespace NBodyTaskGUI
         int deltaTime;
         int threadsNum;
 
-        public Form2(Assembly realizationAssembly, int bodiesCount, double bodyMass, int deltaTime, int threadsNum)
+        public ModelingForm(Assembly realizationAssembly, int bodiesCount, double bodyMass, int deltaTime, int threadsNum)
         {
             InitializeComponent();
             this.DoubleBuffered = true;
@@ -74,9 +74,9 @@ namespace NBodyTaskGUI
 
         private async Task StartModelingAsync(CancellationToken ct)
         {
-            
 
-            for (int i = 0; i < 1000000000; i += (int)settingsType.GetField("DeltaTime").GetValue(settingsInstance))
+
+            for (; ; )
             {
 
                 if (ct.IsCancellationRequested)
@@ -101,7 +101,7 @@ namespace NBodyTaskGUI
 
         private void CreateAllInstances()
         {
-            settingsInstance = Activator.CreateInstance(settingsType, new object[] { bodyMass, deltaTime, 0.01, threadsNum });
+            settingsInstance = Activator.CreateInstance(settingsType, new object[] { bodyMass, deltaTime, 1, threadsNum });
             generatorInstance = Activator.CreateInstance(generatorType, new object[] { bodiesCount, panel1.Width, panel1.Height });
             MethodInfo generateBodiesMethod = generatorType.GetMethod("GenerateBodies");
             object bodiesCoords = generateBodiesMethod.Invoke(generatorInstance, null);
@@ -141,7 +141,7 @@ namespace NBodyTaskGUI
             }
 
             // Создаем новый экземпляр Form1 и показываем его
-            Form1 form1 = new Form1(realizationAssembly);
+            DataInputForm form1 = new DataInputForm(realizationAssembly);
             form1.Show();
 
             // Закрываем текущую форму (Form2)

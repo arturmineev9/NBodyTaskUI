@@ -1,6 +1,6 @@
 ﻿namespace NBodyTaskGUI
 {
-    partial class Form0
+    partial class DllCheckForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,22 +33,24 @@
             // 
             // buttonLoadDll
             // 
-            buttonLoadDll.Location = new Point(315, 208);
+            buttonLoadDll.Location = new Point(360, 277);
+            buttonLoadDll.Margin = new Padding(3, 4, 3, 4);
             buttonLoadDll.Name = "buttonLoadDll";
-            buttonLoadDll.Size = new Size(133, 23);
+            buttonLoadDll.Size = new Size(152, 31);
             buttonLoadDll.TabIndex = 0;
             buttonLoadDll.Text = "Загрузить DLL";
             buttonLoadDll.UseVisualStyleBackColor = true;
             buttonLoadDll.Click += buttonLoadDll_Click_1;
             // 
-            // Form0
+            // DllCheckForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(buttonLoadDll);
-            Name = "Form0";
-            Text = "Form2";
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "DllCheckForm";
+            Text = "Гравитационная задача n тел";
             ResumeLayout(false);
         }
 

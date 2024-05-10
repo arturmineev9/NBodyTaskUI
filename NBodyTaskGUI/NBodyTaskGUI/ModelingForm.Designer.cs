@@ -2,7 +2,7 @@
 
 namespace NBodyTaskGUI
 {
-    partial class Form2
+    partial class ModelingForm
     {
         /// <summary>
         /// Required designer variable.
