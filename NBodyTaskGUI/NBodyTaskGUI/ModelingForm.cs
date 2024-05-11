@@ -29,8 +29,9 @@ namespace NBodyTaskGUI
         double bodyMass;
         int deltaTime;
         int threadsNum;
+        bool isMulticolored;
 
-        public ModelingForm(Assembly realizationAssembly, int bodiesCount, double bodyMass, int deltaTime, int threadsNum)
+        public ModelingForm(Assembly realizationAssembly, int bodiesCount, double bodyMass, int deltaTime, int threadsNum, bool isMulticolored)
         {
             InitializeComponent();
             this.DoubleBuffered = true;
@@ -39,6 +40,7 @@ namespace NBodyTaskGUI
             this.bodyMass = bodyMass;
             this.deltaTime = deltaTime;
             this.threadsNum = threadsNum;
+            this.isMulticolored = isMulticolored;
             this.WindowState = FormWindowState.Maximized;
 
             // Инициализация типов
@@ -128,7 +130,18 @@ namespace NBodyTaskGUI
                     float x = (float)(double)xProperty.GetValue(position, null);
                     float y = (float)(double)yProperty.GetValue(position, null);
 
-                    e.Graphics.FillEllipse(Brushes.Red, x, y, 10, 10);
+                    if (isMulticolored)
+                    {
+                        PropertyInfo colorProperty = bodyType.GetProperty("BodyColor");
+                        Color color = (Color)colorProperty.GetValue(body, null);
+                        Brush brush = new SolidBrush(color);
+                        e.Graphics.FillEllipse(brush, x, y, 10, 10);
+                    }
+                    else
+                    {
+                        e.Graphics.FillEllipse(Brushes.Red, x, y, 10, 10);
+                    }
+                    
                 }
             }
         }

@@ -36,11 +36,12 @@ partial class DataInputForm
         tbDeltaTime = new TextBox();
         tbThreadsNum = new TextBox();
         invisibleControl = new Control();
+        checkBox1 = new CheckBox();
         SuspendLayout();
         // 
         // btnStart
         // 
-        btnStart.Location = new Point(395, 349);
+        btnStart.Location = new Point(389, 353);
         btnStart.Margin = new Padding(3, 4, 3, 4);
         btnStart.Name = "btnStart";
         btnStart.Size = new Size(86, 31);
@@ -50,7 +51,7 @@ partial class DataInputForm
         // 
         // tbBodiesCount
         // 
-        tbBodiesCount.Location = new Point(331, 198);
+        tbBodiesCount.Location = new Point(331, 183);
         tbBodiesCount.Margin = new Padding(3, 4, 3, 4);
         tbBodiesCount.Name = "tbBodiesCount";
         tbBodiesCount.PlaceholderText = "Количество тел";
@@ -59,7 +60,7 @@ partial class DataInputForm
         // 
         // tbBodyMass
         // 
-        tbBodyMass.Location = new Point(331, 233);
+        tbBodyMass.Location = new Point(331, 218);
         tbBodyMass.Margin = new Padding(3, 4, 3, 4);
         tbBodyMass.Name = "tbBodyMass";
         tbBodyMass.PlaceholderText = "Масса тел";
@@ -68,7 +69,7 @@ partial class DataInputForm
         // 
         // tbDeltaTime
         // 
-        tbDeltaTime.Location = new Point(331, 276);
+        tbDeltaTime.Location = new Point(331, 253);
         tbDeltaTime.Margin = new Padding(3, 4, 3, 4);
         tbDeltaTime.Name = "tbDeltaTime";
         tbDeltaTime.PlaceholderText = "Временной шаг (Delta-time)";
@@ -77,7 +78,7 @@ partial class DataInputForm
         // 
         // tbThreadsNum
         // 
-        tbThreadsNum.Location = new Point(331, 314);
+        tbThreadsNum.Location = new Point(331, 288);
         tbThreadsNum.Margin = new Padding(3, 4, 3, 4);
         tbThreadsNum.Name = "tbThreadsNum";
         tbThreadsNum.PlaceholderText = "Количество потоков";
@@ -92,11 +93,23 @@ partial class DataInputForm
         invisibleControl.Size = new Size(0, 0);
         invisibleControl.TabIndex = 0;
         // 
+        // checkBox1
+        // 
+        checkBox1.AutoSize = true;
+        checkBox1.Location = new Point(331, 322);
+        checkBox1.Name = "checkBox1";
+        checkBox1.Size = new Size(165, 24);
+        checkBox1.TabIndex = 5;
+        checkBox1.Text = "Разноцветные тела";
+        checkBox1.UseVisualStyleBackColor = true;
+        checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+        // 
         // DataInputForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(914, 600);
+        Controls.Add(checkBox1);
         Controls.Add(invisibleControl);
         Controls.Add(tbThreadsNum);
         Controls.Add(tbDeltaTime);
@@ -120,4 +133,5 @@ partial class DataInputForm
     private TextBox tbThreadsNum;
     private Button button1;
     Control invisibleControl;
+    private CheckBox checkBox1;
 }

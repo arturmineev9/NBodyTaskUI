@@ -13,6 +13,8 @@ namespace NBodyTaskGUI
         private object generatorInstance;
         private object acceptableParamsInstance;
 
+        private bool isMulticolored;
+
         Assembly realizationAssembly;
         Type solverType;
         Type settingsType;
@@ -24,10 +26,11 @@ namespace NBodyTaskGUI
             this.realizationAssembly = realizationAssembly;
             this.ActiveControl = invisibleControl;
             this.DoubleBuffered = true;
+            isMulticolored = false;
             paramsType = realizationAssembly.GetType("NBodyTaskRealisation.BodiesAcceptableParams");
             btnStart.Click += button1_Click;
-            
-            
+
+
             //timer = new Timer();
             //timer.Interval = 1000; 
             //timer.Tick += Timer_Tick;
@@ -77,9 +80,9 @@ namespace NBodyTaskGUI
 
             int threadsNum = int.Parse(tbThreadsNum.Text);
 
-            
 
-            ModelingForm form2 = new ModelingForm(realizationAssembly, bodiesCount, bodyMass, deltaTime, threadsNum);
+
+            ModelingForm form2 = new ModelingForm(realizationAssembly, bodiesCount, bodyMass, deltaTime, threadsNum, isMulticolored);
             form2.Show();
             this.Hide();
         }
@@ -96,6 +99,16 @@ namespace NBodyTaskGUI
                 }
             }
             return false;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+
+            if (checkBox.Checked)
+            {
+                isMulticolored = true;
+            }
         }
 
         /*private void InitializeDllComponent()
